@@ -1,0 +1,27 @@
+name: macos
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  unit-tests:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Setup Homebrew packages
+      run: |
+        brew install kcov
+    - name: Run unit tests
+      env:
+        COVERAGE: true
+      run: make -C test test
+    - uses: codecov/codecov-action@v1
+      with:
+        directory: ./coverage
+        flags: unittests

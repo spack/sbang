@@ -1,4 +1,8 @@
 # sbang
+![linux](https://github.com/spack/sbang/workflows/linux/badge.svg)
+![macos](https://github.com/spack/sbang/workflows/macos/badge.svg)
+![shellcheck](https://github.com/spack/sbang/workflows/shellcheck/badge.svg)
+[![codecov](https://codecov.io/gh/spack/sbang/branch/main/graph/badge.svg?token=IKH7mB5qq7)](undefined)
 
 `sbang` lets you run scripts with very long shebang (`#!`) lines.
 

@@ -1,0 +1,13 @@
+coverage:
+  precision: 2
+  round: nearest
+  range: 60...90
+  status:
+    project:
+      default:
+        threshold: 0.2%
+
+ignore:
+  - test/.*
+
+comment: off
