@@ -14,28 +14,36 @@ if [ -z "${SBANG:-}" ]; then
     exit 1
 fi
 
-# enable debug mode for tests below to work
+# ensure that arguments are not all passed together as one big string,
+# and that escaped arguments are handled.
+title "Test arguments are parsed and passed properly"
+equals "arg1"      $SBANG shebangs/arg1.sh arg1 "arg2 arg2" arg3\ arg3 arg4
+equals "arg2 arg2" $SBANG shebangs/arg2.sh arg1 "arg2 arg2" arg3\ arg3 arg4
+equals "arg3 arg3" $SBANG shebangs/arg3.sh arg1 "arg2 arg2" arg3\ arg3 arg4
+equals "arg4"      $SBANG shebangs/arg4.sh arg1 "arg2 arg2" arg3\ arg3 arg4
+
+# enable debug mode for tests below to work -- this outputs what would be run
 export SBANG_DEBUG=1
 
 title "Testing languages with shell-style comments"
-contains "/usr/bin/perl -x"         $SBANG shebangs/perl.pl
-contains "/usr/bin/env perl -x"     $SBANG shebangs/perl-env.pl
-contains "/usr/bin/perl -w -x"      $SBANG shebangs/perl-w.pl
-contains "/usr/bin/env perl -w -x"  $SBANG shebangs/perl-w-env.pl
+equals "/usr/bin/perl -x shebangs/perl.pl"              $SBANG shebangs/perl.pl
+equals "/usr/bin/env perl -x shebangs/perl-env.pl"      $SBANG shebangs/perl-env.pl
+equals "/usr/bin/perl -w -x shebangs/perl-w.pl"         $SBANG shebangs/perl-w.pl
+equals "/usr/bin/env perl -w -x shebangs/perl-w-env.pl" $SBANG shebangs/perl-w-env.pl
 
-contains "/usr/bin/ruby -x"         $SBANG shebangs/ruby.rb
-contains "/usr/bin/env ruby -x"     $SBANG shebangs/ruby-env.rb
+equals "/usr/bin/ruby -x shebangs/ruby.rb"              $SBANG shebangs/ruby.rb
+equals "/usr/bin/env ruby -x shebangs/ruby-env.rb"      $SBANG shebangs/ruby-env.rb
 
-contains "/usr/bin/python"          $SBANG shebangs/python.py
-contains "/usr/bin/env python"      $SBANG shebangs/python-env.py
+equals "/usr/bin/python shebangs/python.py"             $SBANG shebangs/python.py
+equals "/usr/bin/env python shebangs/python-env.py"     $SBANG shebangs/python-env.py
 
-contains "/bin/sh"                  $SBANG shebangs/sh.sh
-contains "/bin/bash"                $SBANG shebangs/bash.bash
+equals "/bin/sh shebangs/sh.sh"                         $SBANG shebangs/sh.sh
+equals "/bin/bash shebangs/bash.bash"                   $SBANG shebangs/bash.bash
 
 title "Testing languages without shell-style comments"
-contains "/path/to/lua"             $SBANG shebangs/lua.lua
-contains "/path/to/node"            $SBANG shebangs/node.js
-contains "/usr/bin/php"             $SBANG shebangs/php.php
+equals "/path/to/lua shebangs/lua.lua"                  $SBANG shebangs/lua.lua
+equals "/path/to/node shebangs/node.js"                 $SBANG shebangs/node.js
+equals "/usr/bin/php shebangs/php.php"                  $SBANG shebangs/php.php
 
 title "Testing sbang fails with invalid input"
 fails $SBANG
@@ -45,9 +53,3 @@ fails $SBANG shebangs/no-interpreter
 title "Testing sbang doesn't loop infinitely"
 fails $SBANG shebangs/sbang
 fails $SBANG shebangs/sbang-env
-
-title "Test escapes and spaces in argument parsing"
-contains "arg1"      $SBANG shebangs/arg1.sh arg1 "arg2 arg2" arg3\ arg3 arg4
-contains "arg2 arg2" $SBANG shebangs/arg2.sh arg1 "arg2 arg2" arg3\ arg3 arg4
-contains "arg3 arg3" $SBANG shebangs/arg3.sh arg1 "arg2 arg2" arg3\ arg3 arg4
-contains "arg4"      $SBANG shebangs/arg4.sh arg1 "arg2 arg2" arg3\ arg3 arg4
