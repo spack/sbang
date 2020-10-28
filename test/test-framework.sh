@@ -133,6 +133,34 @@ contains() {
 }
 
 #
+# Ensure that a string is the exact output of a command.
+# Suppresses output on success.
+# On failure, echo the exit code and output.
+#
+equals() {
+    string="$1"
+    shift
+
+    printf "'%s' output is '$string' ... " "$*"
+    output=$("$@" 2>&1)
+    err="$?"
+
+    if [ "${output#*$string}" = "" ]; then
+        pass
+    else
+        fail
+        echo_red "Command exited with error $err."
+        echo_red "output != '$string'."
+        if [ -n "$output" ]; then
+            echo_msg "Output:"
+            echo "$output"
+        else
+            echo_msg "No output."
+        fi
+    fi
+}
+
+#
 # Ensure that a variable is set.
 #
 is_set() {
