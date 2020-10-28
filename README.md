@@ -111,6 +111,13 @@ with the script as an argument. It also forwards arguments.
 `sbang` was created by Todd Gamblin, tgamblin@llnl.gov, as part of
 [Spack](https://github.com/spack/spack).
 
+## Related projects
+
+The [long-shebang](https://github.com/shlevy/long-shebang) project is
+like `sbang` but written in C instead of POSIX `sh`. It grew out of
+[Nix](https://github.com/nixos/nix) a few months after `sbang` grew out
+of Spack, for similar reasons.
+
 ## License
 
 `sbang` is distributed under the terms of both the MIT license and the
