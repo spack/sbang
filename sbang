@@ -63,26 +63,15 @@ while read -r line && [ $lines -ne 2 ]; do
     lines=$((lines+1))
 done < "$script"
 
-# shellcheck disable=SC2124
-# this saves arguments for later and intentionally assigns as an array
-args="$@"
-
 # error if we did not find any interpreter
 if [ -z "$shebang_line"  ]; then
     die "error: sbang found no interpreter in $script"
 fi
 
-# handle scripts with sbang parameters, e.g.:
-#
-#   #!/<some-long-path>/perl -w
-#
-# put the shebang line with all the parameters in the $@ array and get
-# the first element.
-# shellcheck disable=SC2086
-set $shebang_line
-set -- "$@"
-interpreter="$1"
-arg1="$2"
+# parse out the interpreter and first argument
+IFS=' ' read -r interpreter arg1 rest <<EOF
+$shebang_line
+EOF
 
 # Determine if the interpreter is a particular program, accounting for the
 # '#!/usr/bin/env PROGRAM' convention. So:
@@ -109,8 +98,8 @@ fi
 #
 if interpreter_is perl || interpreter_is ruby; then
     # shellcheck disable=SC2086
-    $exec $shebang_line -x "$args"
+    $exec $shebang_line -x "$@"
 else
     # shellcheck disable=SC2086
-    $exec $shebang_line "$args"
+    $exec $shebang_line "$@"
 fi

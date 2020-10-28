@@ -45,3 +45,9 @@ fails $SBANG shebangs/no-interpreter
 title "Testing sbang doesn't loop infinitely"
 fails $SBANG shebangs/sbang
 fails $SBANG shebangs/sbang-env
+
+title "Test escapes and spaces in argument parsing"
+contains "arg1"      $SBANG shebangs/arg1.sh arg1 "arg2 arg2" arg3\ arg3 arg4
+contains "arg2 arg2" $SBANG shebangs/arg2.sh arg1 "arg2 arg2" arg3\ arg3 arg4
+contains "arg3 arg3" $SBANG shebangs/arg3.sh arg1 "arg2 arg2" arg3\ arg3 arg4
+contains "arg4"      $SBANG shebangs/arg4.sh arg1 "arg2 arg2" arg3\ arg3 arg4
