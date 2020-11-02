@@ -36,7 +36,7 @@ if [ -n "${SBANG_DEBUG}" ]; then
 fi
 
 # First argument is the script we want to actually run.
-script="$1"
+script=$1
 
 # ensure that the script actually exists
 if [ -z "$script" ]; then
@@ -49,14 +49,14 @@ fi
 lines=0
 while read -r line && [ $lines -ne 2 ]; do
     if [ "${line#\#!}" != "$line" ]; then
-        shebang_line="${line#\#!}"
+        shebang_line=${line#\#!}
     elif [ "${line#//!}" != "$line" ]; then      # // comments
-        shebang_line="${line#//!}"
+        shebang_line=${line#//!}
     elif [ "${line#--!}" != "$line" ]; then      # -- lua comments
-        shebang_line="${line#--!}"
+        shebang_line=${line#--!}
     elif [ "${line#<?php\ }" != "$line" ]; then  # php comments
-        shebang_line="${line#<?php\ \#!}"
-        shebang_line="${shebang_line%\ ?>}"
+        shebang_line=${line#<?php\ \#!}
+        shebang_line=${shebang_line%\ ?>}
     fi
     lines=$((lines+1))
 done < "$script"
