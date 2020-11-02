@@ -15,33 +15,78 @@ make sbang the interpreter, like this:
 
 ```sh
 #!/bin/sh /path/to/sbang
-#!/long/path/to/real/interpreter with arguments
+#!/long/path/to/real/interpreter with many arguments
 ```
 
 `sbang` will run the real interpreter with the script as its argument.
 
-## Longer explanation
+## Why?
+
+Most people don't have long shebang problems. They can come up if you
+install software in deeply nested directories. e.g., in your home
+directory (with something like [Spack](https://github.com/spack/spack)),
+or in a shared project directory on an NFS volume. It also comes up in
+deeply nested [virtual environments](https://github.com/pypa/virtualenv),
+where the `python` interpreter is copied into a deep path.
+
+Generally, `sbang` is useful for user-installed code. Admins who have
+root and can put software wherever they want will likely not need it.
+
+### Long shebangs
 
 Suppose you have a script, `long-shebang.sh`, like this:
 
 ```sh
-#!/very/long/path/to/some/interp
+#!/very/very/long/path/to/some/interp
 
 echo "success!"
 ```
 
 If `very/long/path` is actually very long, running this script will
-result in an error on some OS's. On Linux, you get this:
+result in an error on some OS's. On Linux, you get an error this:
 
 ```console
 $ ./long-shebang.sh
--bash: ./longshebang.sh: /very/long/path/to/some/interp: bad interpreter:
+-bash: ./long=shebang.sh: /very/very/long/path/to/some/interp: bad interpreter:
        No such file or directory
 ```
 
-On macOS, the system simply assumes the interpreter is the shell and
-tries to run with it, which is not likely what you want.
+On macOS, things are worse. The system doesn't consider the long
+interpreter path, and just tries to run the script with the shell. This
+is not likely to be what you intended.
 
+### Shebangs with arguments
+
+Passing arguments on the shebang line is an issue.  Consider:
+
+```sh
+#!/path/to/interp -a -b -c
+
+...
+```
+
+Depending on your OS, `interp` may end up receiving a single argument
+like `"-a -b -c"` instead of three separate arguments (`"-a"`, `"-b"`,
+`"-c"`). `sbang` will delegate sbebang arguments separately, as you would
+expect, so you can do this:
+
+```sh
+#!/bin/sh /path/to/sbang
+#!/path/to/interp -a -b -c
+
+...
+```
+
+### Further reading
+
+There's a really comprehensive writeup on the history and limitations of
+the shebang mechanism at
+https://www.in-ulm.de/~mascheck/various/shebang/.
+
+
+## Using `sbang`
+
+You can use `sbang` in several ways.
 
 ### `sbang` on the command line
 
@@ -105,9 +150,10 @@ print "success!"
 
 ## How it works
 
-`sbang` is a very simple posix shell script. It looks at the first two
+`sbang` is a very simple POSIX shell script. It looks at the first two
 lines of a script argument and runs the last line starting with `#!`,
-with the script as an argument. It also forwards arguments.
+with the script as an argument. It also forwards arguments. Because it's
+simple POSIX, you can use it amost anywhere.
 
 
 ## Authors
