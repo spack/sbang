@@ -67,7 +67,7 @@ Passing arguments on the shebang line is an issue.  Consider:
 
 Depending on your OS, `interp` may end up receiving a single argument
 like `"-a -b -c"` instead of three separate arguments (`"-a"`, `"-b"`,
-`"-c"`). `sbang` will delegate sbebang arguments separately, as you would
+`"-c"`). `sbang` will delegate shebang arguments separately, as you would
 expect, so you can do this:
 
 ```sh
@@ -153,7 +153,7 @@ print "success!"
 `sbang` is a very simple POSIX shell script. It looks at the first two
 lines of a script argument and runs the last line starting with `#!`,
 with the script as an argument. It also forwards arguments. Because it's
-simple POSIX, you can use it amost anywhere.
+simple POSIX, you can use it almost anywhere.
 
 
 ## Authors
