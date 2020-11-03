@@ -34,6 +34,9 @@ equals "/usr/bin/env perl -w -x shebangs/perl-w-env.pl" $SBANG shebangs/perl-w-e
 equals "/usr/bin/ruby -x shebangs/ruby.rb"              $SBANG shebangs/ruby.rb
 equals "/usr/bin/env ruby -x shebangs/ruby-env.rb"      $SBANG shebangs/ruby-env.rb
 
+equals "/usr/bin/perl5.32.0 -x shebangs/perl-ver.pl"    $SBANG shebangs/perl-ver.pl
+equals "/usr/bin/ruby2.7 -x shebangs/ruby-ver.rb"       $SBANG shebangs/ruby-ver.rb
+
 equals "/usr/bin/python shebangs/python.py"             $SBANG shebangs/python.py
 equals "/usr/bin/env python shebangs/python-env.py"     $SBANG shebangs/python-env.py
 
