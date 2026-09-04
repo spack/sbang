@@ -148,6 +148,19 @@ print "success!"
 <?php echo "success!\n"; ?>
 ```
 
+### File encodings
+
+Python and Ruby support comments to control the file encoding only within
+the first two lines of the file. When using sbang with encoding comments,
+put the shebang line for sbang first, then the encoding comment, and then
+the interpreter to use. E.g.:
+
+```sh
+#!/bin/sh /path/to/sbang
+# -*- coding: latin-1 -*-
+#!/very/long/path/to/python
+```
+
 ## How it works
 
 `sbang` is a very simple POSIX shell script. It looks at the first two
