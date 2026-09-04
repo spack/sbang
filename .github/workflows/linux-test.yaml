@@ -16,9 +16,10 @@ jobs:
         fetch-depth: 0
     - name: Setup kcov
       run: |
-        sudo add-apt-repository universe
         sudo apt-get update
-        sudo apt-get install -y kcov
+        sudo apt-get install -y rustc cargo
+        cargo install cargo-make
+        cargo make kcov-install-debian
     - name: run unit tests
       env:
         COVERAGE: true
