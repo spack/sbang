@@ -33,12 +33,16 @@ equals "/usr/bin/env perl -w -x shebangs/perl-w-env.pl" $SBANG shebangs/perl-w-e
 
 equals "/usr/bin/ruby -x shebangs/ruby.rb"              $SBANG shebangs/ruby.rb
 equals "/usr/bin/env ruby -x shebangs/ruby-env.rb"      $SBANG shebangs/ruby-env.rb
+equals "/usr/bin/ruby -x shebangs/ruby_with_encoding.rb"          $SBANG shebangs/ruby_with_encoding.rb
 
 equals "/usr/bin/perl5.32.0 -x shebangs/perl-ver.pl"    $SBANG shebangs/perl-ver.pl
 equals "/usr/bin/ruby2.7 -x shebangs/ruby-ver.rb"       $SBANG shebangs/ruby-ver.rb
 
 equals "/usr/bin/python shebangs/python.py"             $SBANG shebangs/python.py
 equals "/usr/bin/env python shebangs/python-env.py"     $SBANG shebangs/python-env.py
+equals "/usr/bin/python shebangs/python_with_encoding_emacs.py"   $SBANG shebangs/python_with_encoding_emacs.py
+equals "/usr/bin/python shebangs/python_with_encoding_minimal.py" $SBANG shebangs/python_with_encoding_minimal.py
+equals "/usr/bin/python shebangs/python_with_encoding_vim.py"     $SBANG shebangs/python_with_encoding_vim.py
 
 equals "/bin/sh shebangs/sh.sh"                         $SBANG shebangs/sh.sh
 equals "/bin/bash shebangs/bash.bash"                   $SBANG shebangs/bash.bash
