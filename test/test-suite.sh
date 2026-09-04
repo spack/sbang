@@ -44,6 +44,7 @@ equals "/usr/bin/python shebangs/python_with_encoding_emacs.py"   $SBANG shebang
 equals "/usr/bin/python shebangs/python_with_encoding_minimal.py" $SBANG shebangs/python_with_encoding_minimal.py
 equals "/usr/bin/python shebangs/python_with_encoding_equals.py"  $SBANG shebangs/python_with_encoding_equals.py
 equals "/usr/bin/python shebangs/python_with_encoding_vim.py"     $SBANG shebangs/python_with_encoding_vim.py
+equals "/usr/bin/coding=silliness/python shebangs/python_shebang_encoding.py" $SBANG shebangs/python_shebang_encoding.py
 
 equals "/bin/sh shebangs/sh.sh"                         $SBANG shebangs/sh.sh
 equals "/bin/bash shebangs/bash.bash"                   $SBANG shebangs/bash.bash
