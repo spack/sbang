@@ -16,8 +16,9 @@ jobs:
         fetch-depth: 0
     - name: Setup kcov
       run: |
-         sudo apt-get update
-         sudo apt-get install -y kcov
+        sudo add-apt-repository universe
+        sudo apt-get update
+        sudo apt-get install -y kcov
     - name: run unit tests
       env:
         COVERAGE: true
