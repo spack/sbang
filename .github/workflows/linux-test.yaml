@@ -16,10 +16,14 @@ jobs:
         fetch-depth: 0
     - name: Setup kcov
       run: |
-        sudo apt-get update
-        sudo apt-get install -y rustc cargo
-        cargo install cargo-make
-        cargo make kcov-install-debian
+        sudo apt update
+        sudo apt install -y binutils-dev build-essential cmake libssl-dev libcurl4-openssl-dev libelf-dev libdw-dev zlib1g-dev libiberty-dev git
+        git clone https://github.com/SimonKagstrom/kcov.git
+        cd kcov
+        mkdir build && cd build
+        cmake ..
+        make -j$(nproc)
+        sudo make install
     - name: run unit tests
       env:
         COVERAGE: true
